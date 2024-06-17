@@ -1,3 +1,7 @@
+jwt:
+    key:
+        public: app.pub
+        private: app.key
 spring:
     datasource:
         driver-class-name: org.postgresql.Driver

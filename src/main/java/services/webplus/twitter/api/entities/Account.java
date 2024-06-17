@@ -2,7 +2,10 @@ package services.webplus.twitter.api.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
@@ -35,11 +38,8 @@ public class Account implements Serializable {
 
     private String password;
 
-    @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinTable(
-        name = "tb_account_roles", 
-        joinColumns = @JoinColumn(name = "account_id"), 
-        inverseJoinColumns = @JoinColumn(name = "role_id")
-    )
-    private Set<Role> roles = new HashSet<>();
+
+    public boolean checkedPassword(String password, BCryptPasswordEncoder bCryptPasswordEncoder) {
+        return bCryptPasswordEncoder.matches(password, this.password);
+    }
 }
