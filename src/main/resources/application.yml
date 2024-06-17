@@ -1,0 +1,18 @@
+spring:
+    datasource:
+        driver-class-name: org.postgresql.Driver
+        url: jdbc:postgresql://localhost:5432/twitter_api_db
+        username: postgres
+        password: 102030
+    jpa:
+        properties:
+            hibernate:
+                dialect: org.hibernate.dialect.PostgreSQLDialect
+        hibernate:
+            ddl-auto: update
+        show-sql: true
+        open-in-view: false
+        generate-ddl: true
+    sql:
+        init:
+            mode: always
