@@ -5,10 +5,11 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import services.webplus.twitter.api.entities.Account;
+import services.webplus.twitter.api.entities.Role;
 import services.webplus.twitter.api.repositories.AccountRepository;
-import services.webplus.twitter.api.repositories.RoleRepository;
 
 @Configuration
 public class AdminConfig implements CommandLineRunner {
@@ -17,18 +18,10 @@ public class AdminConfig implements CommandLineRunner {
     private AccountRepository accountRepository;
 
     @Autowired
-    private RoleRepository roleRepository;
-    
-    public void populationAdminAccount() {
-        
-    }
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
-
-        var role = roleRepository.findByProfile("ADMIN").get();
-
-        System.out.println(role.getProfile());
 
         accountRepository.findByEmail("glesioss@gmail.com")
             .ifPresentOrElse(
@@ -37,8 +30,8 @@ public class AdminConfig implements CommandLineRunner {
                     Account account = new Account();
                     account.setEmail("glesioss@gmail.com");
                     account.setUsername("glesio.santos");
-                    account.setRoles(Set.of(role));
-
+                    account.setRoles(Set.of(Role.A));
+                    account.setPassword(passwordEncoder.encode("102030"));
                     accountRepository.save(account);
                     System.out.println("Create with success!");
                 } 
