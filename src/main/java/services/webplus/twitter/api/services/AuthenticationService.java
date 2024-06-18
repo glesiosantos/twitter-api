@@ -1,6 +1,7 @@
 package services.webplus.twitter.api.services;
 
 import java.time.Instant;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -36,10 +37,18 @@ public class AuthenticationService {
         var now = Instant.now();
         var expiresIn = 300L;
 
+        var scopes = account.getRoles()
+                .stream()
+                .map(role -> role)
+                .collect(Collectors.toList());
+
+        System.out.println("*********** "+scopes);
+
         var claims = JwtClaimsSet.builder()
                         .issuer("twitter-api")
                         .subject(account.getEmail())
                         .expiresAt(now.plusSeconds(expiresIn))
+                        .claim("scopes", scopes)
                         .issuedAt(now).build();
         
         String jwtToken = jwtEncoder.encode(JwtEncoderParameters.from(claims)).getTokenValue();

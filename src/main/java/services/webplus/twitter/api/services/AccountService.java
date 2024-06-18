@@ -1,10 +1,12 @@
 package services.webplus.twitter.api.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import services.webplus.twitter.api.entities.Account;
 import services.webplus.twitter.api.payload.SignUpRequest;
@@ -30,6 +32,11 @@ public class AccountService {
 
         var account = Account.convertRequestToModel(request, passwordEncoder);
         return accountRepository.save(account);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Account> loadAll() {
+        return accountRepository.findAll();
     }
     
 }
