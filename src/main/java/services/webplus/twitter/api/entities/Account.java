@@ -2,12 +2,10 @@ package services.webplus.twitter.api.entities;
 
 import java.io.Serializable;
 import java.util.HashSet;
-import java.util.Optional;
 import java.util.Set;
 
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
@@ -18,12 +16,11 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import services.webplus.twitter.api.payload.SignUpRequest;
 
 @Getter
 @Setter
@@ -47,7 +44,17 @@ public class Account implements Serializable {
     @CollectionTable(name = "account_role")
     public Set<Role> roles = new HashSet<>();
 
-    public boolean checkedPassword(String password, BCryptPasswordEncoder bCryptPasswordEncoder) {
-        return bCryptPasswordEncoder.matches(password, this.password);
+    public boolean checkedPassword(String password, PasswordEncoder encoder) {
+        return encoder.matches(this.password, password);
+    }
+
+    public static Account convertRequestToModel(SignUpRequest request, PasswordEncoder passwordEncoder) {
+        Account account = new Account();
+        account.setUsername(request.username());
+        account.setEmail(request.email());
+        account.setPassword(passwordEncoder.encode(request.password()));
+        account.setRoles(Set.of(Role.U));
+
+        return account;
     }
 }

@@ -4,12 +4,11 @@ import java.time.Instant;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
 import org.springframework.stereotype.Service;
-
-import com.nimbusds.jwt.JWTClaimsSet;
 
 import services.webplus.twitter.api.payload.SignInRequest;
 import services.webplus.twitter.api.payload.SignInResponse;
@@ -19,7 +18,7 @@ import services.webplus.twitter.api.repositories.AccountRepository;
 public class AuthenticationService {
     
     @Autowired
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private AccountRepository accountRepository;
@@ -29,8 +28,8 @@ public class AuthenticationService {
 
     public SignInResponse authenticated(SignInRequest request) {
         var account = accountRepository.findByEmail(request.email()).get();
-
-        if(account == null || account.checkedPassword(request.password(), bCryptPasswordEncoder)){
+        
+        if(account == null || account.checkedPassword(request.password(), passwordEncoder)){
             throw new RuntimeException("Account or password is invalid");
         }
 

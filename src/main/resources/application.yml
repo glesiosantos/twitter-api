@@ -1,3 +1,5 @@
+server:
+    port: 9000
 jwt:
     key:
         public: app.pub
