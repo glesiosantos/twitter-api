@@ -11,17 +11,17 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.Setter;
+import services.webplus.twitter.api.payload.TweetRequest;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "twitters")
-public class Twitter implements Serializable {
+@Table(name = "tweets")
+public class Tweet implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,4 +35,12 @@ public class Twitter implements Serializable {
     @CreationTimestamp
     @Column(name="created_at")
     private Instant createdAt;
+
+    public static Tweet convertRequestToModel(TweetRequest request, Account account) {
+        Tweet tweet = new Tweet();
+        tweet.setContext(request.context());
+        tweet.setAccount(account);
+        tweet.setCreatedAt(Instant.now());
+        return tweet;
+    }
 }

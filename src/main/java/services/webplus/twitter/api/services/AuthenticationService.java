@@ -4,7 +4,6 @@ import java.time.Instant;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
 import org.springframework.security.oauth2.jwt.JwtEncoder;
@@ -42,7 +41,7 @@ public class AuthenticationService {
                 .map(role -> role)
                 .collect(Collectors.toList());
 
-        System.out.println("*********** "+scopes);
+        System.out.println("****** *********** ************ "+scopes);
 
         var claims = JwtClaimsSet.builder()
                         .issuer("twitter-api")
