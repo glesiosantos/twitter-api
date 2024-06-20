@@ -53,7 +53,7 @@ public class Account implements Serializable {
         account.setUsername(request.username());
         account.setEmail(request.email());
         account.setPassword(passwordEncoder.encode(request.password()));
-        account.setRoles(Set.of(Role.U));
+        account.setRoles(Set.of(Role.USER));
 
         return account;
     }

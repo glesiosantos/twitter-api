@@ -30,7 +30,7 @@ public class AdminConfig implements CommandLineRunner {
                     Account account = new Account();
                     account.setEmail("glesioss@gmail.com");
                     account.setUsername("glesio.santos");
-                    account.setRoles(Set.of(Role.A));
+                    account.setRoles(Set.of(Role.ADMIN));
                     account.setPassword(passwordEncoder.encode("102030"));
                     accountRepository.save(account);
                     System.out.println("Create with success!");
