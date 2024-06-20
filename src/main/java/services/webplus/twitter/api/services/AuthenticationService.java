@@ -41,7 +41,7 @@ public class AuthenticationService {
                 .map(role -> role.toString())
                 .collect(Collectors.toSet());
 
-        System.out.println("*********** "+scopes);
+        System.out.println("****** *********** ************ "+scopes);
 
         var claims = JwtClaimsSet.builder()
                         .issuer("twitter-api")
