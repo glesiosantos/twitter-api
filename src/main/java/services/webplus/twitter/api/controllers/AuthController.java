@@ -12,18 +12,18 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import services.webplus.twitter.api.payload.SignInRequest;
 import services.webplus.twitter.api.payload.SignUpRequest;
-import services.webplus.twitter.api.services.AccountService;
-import services.webplus.twitter.api.services.AuthenticationService;
+import services.webplus.twitter.api.services.impl.AccountServiceImpl;
+import services.webplus.twitter.api.services.impl.AuthenticationServiceImpl;
 
 @RestController
 @RequestMapping("auth")
 public class AuthController {
 
     @Autowired
-    private AuthenticationService authenticationService;
+    private AuthenticationServiceImpl authenticationService;
 
     @Autowired
-    private AccountService accountService;
+    private AccountServiceImpl accountService;
     
     @PostMapping("/signin")
     public ResponseEntity<?> signIn(@RequestBody SignInRequest request) {

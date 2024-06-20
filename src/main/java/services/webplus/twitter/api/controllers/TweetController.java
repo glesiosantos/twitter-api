@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import services.webplus.twitter.api.payload.TweetRequest;
-import services.webplus.twitter.api.services.TweetService;
+import services.webplus.twitter.api.services.impl.TweetServiceImpl;
 
 @RestController
 @RequestMapping("tweets")
 public class TweetController {
 
     @Autowired
-    private TweetService tweetService;
+    private TweetServiceImpl tweetService;
     
     @PostMapping
     public ResponseEntity<?> addTweet(@RequestBody TweetRequest request, JwtAuthenticationToken token) throws Exception {

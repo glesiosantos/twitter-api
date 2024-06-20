@@ -7,20 +7,18 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import services.webplus.twitter.api.services.AccountService;
+import services.webplus.twitter.api.services.impl.AccountServiceImpl;
 
 @RestController
 @RequestMapping("accounts")
 public class AccountController {
     
     @Autowired
-    private AccountService accountService;
+    private AccountServiceImpl accountService;
 
     @GetMapping
     @PreAuthorize("hasAuthority('SCOPE_ADMIN')")
     public ResponseEntity<?> loadAccountsRegistered() {
-        
         return ResponseEntity.ok(accountService.loadAll());
     }
-
 }
