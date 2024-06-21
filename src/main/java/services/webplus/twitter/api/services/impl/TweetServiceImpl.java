@@ -21,8 +21,8 @@ public class TweetServiceImpl {
     @Autowired
     private AccountServiceImpl accountService;
 
-    public Tweet addTweet(TweetRequest request, UUID email) throws Exception {
-        Account account = accountService.findByEmail(email.toString());
+    public Tweet addTweet(TweetRequest request, String idAccount) throws Exception {
+        Account account = accountService.findAccountById(idAccount);
         return tweetRepository.save(Tweet.convertRequestToModel(request, account));
     }
 
@@ -34,5 +34,9 @@ public class TweetServiceImpl {
     @Transactional(readOnly = true)
     public List<Tweet> loadTweetByAccount(Long id) {
         return tweetRepository.findAll();
+    }
+
+    public List<Tweet> loadAllTweetsByAccount(Long id) {
+        return tweetRepository.findByAccount(id);
     }
 }

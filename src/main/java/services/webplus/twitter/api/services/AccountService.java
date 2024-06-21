@@ -8,5 +8,6 @@ import services.webplus.twitter.api.payload.SignUpRequest;
 public interface AccountService {
     Account createAccount(SignUpRequest request) throws Exception;
     List<Account> loadAll();
+    Account findAccountById(String id);
     Account findByEmail(String email) throws Exception;
 }

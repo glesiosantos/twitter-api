@@ -1,6 +1,7 @@
 package services.webplus.twitter.api.entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,8 +17,8 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import services.webplus.twitter.api.payload.SignUpRequest;
@@ -43,6 +44,9 @@ public class Account implements Serializable {
     @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "account_role")
     public Set<Role> roles = new HashSet<>();
+
+    // @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
+    // private java.util.List<Tweet> tweets = new ArrayList<>();
 
     public boolean checkedPassword(String password, PasswordEncoder encoder) {
         return encoder.matches(this.password, password);

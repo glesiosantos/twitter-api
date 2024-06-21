@@ -35,18 +35,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         }
 
         var now = Instant.now();
-        var expiresIn = 300L;
+        var expiresIn = 3600L;
 
         var scopes = account.getRoles()
                 .stream()
                 .map(role -> role.toString())
                 .collect(Collectors.toSet());
 
-        System.out.println("****** *********** ************ "+scopes);
-
         var claims = JwtClaimsSet.builder()
                         .issuer("twitter-api")
-                        .subject(account.getEmail())
+                        .subject(account.getId().toString())
                         .expiresAt(now.plusSeconds(expiresIn))
                         .claim("scope", scopes)
                         .issuedAt(now).build();

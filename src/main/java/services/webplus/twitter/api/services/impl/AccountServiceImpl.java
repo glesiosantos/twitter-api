@@ -41,9 +41,15 @@ public class AccountServiceImpl {
     }
 
     @Transactional(readOnly = true)
+    public Account findAccountById(String id) throws Exception {
+        System.out.println("******* ******* ******* "+id);
+        return accountRepository.findById(Long.valueOf(id))
+            .orElseThrow(() -> new ObjectNotFoundException("Account not found"));
+    }
+
+    @Transactional(readOnly = true)
     public Account findByEmail(String email) throws Exception {
         return accountRepository.findByEmail(email)
             .orElseThrow(() -> new ObjectNotFoundException("Account not found"));
-    }
-    
+    }    
 }
